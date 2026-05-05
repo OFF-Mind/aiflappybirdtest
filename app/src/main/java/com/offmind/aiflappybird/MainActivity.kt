@@ -1,29 +1,13 @@
 package com.offmind.aiflappybird
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.offmind.aiflappybird.ui.theme.AIFlappyBirdTheme
-
-private val BUTTON_SPACING = 16.dp
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,51 +15,10 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             AIFlappyBirdTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    MainScreen(modifier = Modifier.padding(innerPadding))
+                Surface(modifier = Modifier.fillMaxSize()) {
+                    GameScreen()
                 }
             }
         }
-    }
-}
-
-@Composable
-fun MainScreen(modifier: Modifier = Modifier) {
-    val context = LocalContext.current
-    Box(
-        contentAlignment = Alignment.Center,
-        modifier = modifier.fillMaxSize()
-    ) {
-        Row(
-            horizontalArrangement = Arrangement.spacedBy(BUTTON_SPACING),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Button(onClick = {
-                Toast.makeText(context, "ХУЙ", Toast.LENGTH_SHORT).show()
-            }) {
-                Text(
-                    text = "ХУЙ",
-                    fontSize = 48.sp,
-                    fontWeight = FontWeight.Bold
-                )
-            }
-            Button(onClick = {
-                Toast.makeText(context, "pizda", Toast.LENGTH_SHORT).show()
-            }) {
-                Text(
-                    text = "pizda",
-                    fontSize = 48.sp,
-                    fontWeight = FontWeight.Bold
-                )
-            }
-        }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun MainScreenPreview() {
-    AIFlappyBirdTheme {
-        MainScreen()
     }
 }

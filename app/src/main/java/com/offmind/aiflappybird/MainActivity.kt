@@ -5,8 +5,9 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
@@ -18,8 +19,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.offmind.aiflappybird.ui.theme.AIFlappyBirdTheme
+
+private val BUTTON_SPACING = 16.dp
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,7 +46,10 @@ fun MainScreen(modifier: Modifier = Modifier) {
         contentAlignment = Alignment.Center,
         modifier = modifier.fillMaxSize()
     ) {
-        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(BUTTON_SPACING),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
             Button(onClick = {
                 Toast.makeText(context, "ХУЙ", Toast.LENGTH_SHORT).show()
             }) {

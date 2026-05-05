@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">AI Flappy Bird</string>
+    <string name="button_play">Play</string>
+    <string name="button_high_scores">High Scores</string>
 </resources>

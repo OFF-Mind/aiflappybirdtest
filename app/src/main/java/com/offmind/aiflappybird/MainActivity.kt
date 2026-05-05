@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.offmind.aiflappybird.ui.theme.AIFlappyBirdTheme
 
-private val ButtonEdgePadding = 32.dp
+private val ButtonSpacing = 32.dp
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,28 +45,28 @@ fun MainScreen(modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
             .fillMaxSize()
-            .padding(vertical = ButtonEdgePadding),
-        verticalArrangement = Arrangement.SpaceBetween,
+            .padding(vertical = ButtonSpacing),
+        verticalArrangement = Arrangement.spacedBy(ButtonSpacing),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Button(
             onClick = {
-                Toast.makeText(context, context.getString(R.string.button_huy), Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, context.getString(R.string.button_play), Toast.LENGTH_SHORT).show()
             }
         ) {
             Text(
-                text = stringResource(R.string.button_huy),
+                text = stringResource(R.string.button_play),
                 fontSize = 48.sp,
                 fontWeight = FontWeight.Bold
             )
         }
         Button(
             onClick = {
-                Toast.makeText(context, context.getString(R.string.button_pizda), Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, context.getString(R.string.button_high_scores), Toast.LENGTH_SHORT).show()
             }
         ) {
             Text(
-                text = stringResource(R.string.button_pizda),
+                text = stringResource(R.string.button_high_scores),
                 fontSize = 48.sp,
                 fontWeight = FontWeight.Bold
             )

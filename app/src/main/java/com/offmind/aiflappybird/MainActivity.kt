@@ -7,6 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import com.offmind.aiflappybird.presentation.game.GameScreen
 import com.offmind.aiflappybird.ui.theme.AIFlappyBirdTheme
 
 class MainActivity : ComponentActivity() {

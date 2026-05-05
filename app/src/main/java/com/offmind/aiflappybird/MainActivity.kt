@@ -16,6 +16,7 @@ import com.offmind.aiflappybird.ui.theme.AIFlappyBirdTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        println("Debug: MainActivity onCreate called")
         enableEdgeToEdge()
         setContent {
             AIFlappyBirdTheme {

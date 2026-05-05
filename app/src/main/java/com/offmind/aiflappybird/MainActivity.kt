@@ -5,7 +5,8 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
@@ -15,11 +16,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.offmind.aiflappybird.ui.theme.AIFlappyBirdTheme
+
+private val ButtonEdgePadding = 32.dp
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,33 +42,31 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MainScreen(modifier: Modifier = Modifier) {
     val context = LocalContext.current
-    Box(
-        modifier = modifier.fillMaxSize()
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .padding(vertical = ButtonEdgePadding),
+        verticalArrangement = Arrangement.SpaceBetween,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Button(
             onClick = {
-                Toast.makeText(context, "ХУЙ", Toast.LENGTH_SHORT).show()
-            },
-            modifier = Modifier
-                .align(Alignment.TopCenter)
-                .padding(top = 32.dp)
+                Toast.makeText(context, context.getString(R.string.button_huy), Toast.LENGTH_SHORT).show()
+            }
         ) {
             Text(
-                text = "ХУЙ",
+                text = stringResource(R.string.button_huy),
                 fontSize = 48.sp,
                 fontWeight = FontWeight.Bold
             )
         }
         Button(
             onClick = {
-                Toast.makeText(context, "pizda", Toast.LENGTH_SHORT).show()
-            },
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .padding(bottom = 32.dp)
+                Toast.makeText(context, context.getString(R.string.button_pizda), Toast.LENGTH_SHORT).show()
+            }
         ) {
             Text(
-                text = "pizda",
+                text = stringResource(R.string.button_pizda),
                 fontSize = 48.sp,
                 fontWeight = FontWeight.Bold
             )

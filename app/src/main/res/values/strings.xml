@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">AI Flappy Bird</string>
+    <string name="button_huy">ХУЙ</string>
+    <string name="button_pizda">pizda</string>
 </resources>

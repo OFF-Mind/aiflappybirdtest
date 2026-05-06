@@ -1,6 +1,5 @@
 plugins {
     alias(libs.plugins.android.library)
-    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
 }
 
@@ -23,9 +22,6 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.toVersion(libs.versions.jdkVersion.get())
         targetCompatibility = JavaVersion.toVersion(libs.versions.jdkVersion.get())
-    }
-    kotlinOptions {
-        jvmTarget = libs.versions.jdkVersion.get()
     }
     buildFeatures {
         compose = true

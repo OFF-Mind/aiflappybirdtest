@@ -2,9 +2,16 @@ package com.offmind.aiflappybird.presentation.game
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
@@ -12,53 +19,81 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.offmind.aiflappybird.designsystem.components.CogwingPanel
+import com.offmind.aiflappybird.designsystem.components.CogwingPrimaryButton
+import com.offmind.aiflappybird.designsystem.components.CogwingScoreRow
+import com.offmind.aiflappybird.designsystem.components.PanelStyle
+import com.offmind.aiflappybird.designsystem.theme.CogwingSpacing
 import com.offmind.aiflappybird.domain.model.GameState
 
 @Composable
 fun GameScreen(viewModel: GameViewModel = viewModel()) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    Canvas(
-        modifier = Modifier
-            .fillMaxSize()
-            .pointerInput(Unit) {
-                detectTapGestures { viewModel.onTap() }
-            }
-    ) {
-        drawRect(color = Color(0xFF4EC0CA), size = size)
+    Box(modifier = Modifier.fillMaxSize()) {
+        Canvas(
+            modifier = Modifier
+                .fillMaxSize()
+                .pointerInput(Unit) {
+                    detectTapGestures { viewModel.onTap() }
+                }
+        ) {
+            drawRect(color = Color(0xFF4EC0CA), size = size)
 
-        val playerRadius = size.width * 0.05f
-        val playerX = size.width * 0.25f
-        val playerYPx = size.height * uiState.bird.y
+            val playerRadius = size.width * 0.05f
+            val playerX = size.width * 0.25f
+            val playerYPx = size.height * uiState.bird.y
 
-        drawCircle(
-            color = Color(0xFFFFD700),
-            radius = playerRadius,
-            center = Offset(playerX, playerYPx)
-        )
+            drawCircle(
+                color = Color(0xFFFFD700),
+                radius = playerRadius,
+                center = Offset(playerX, playerYPx)
+            )
 
-        val obstacleX = size.width * 0.7f
-        val obstacleWidth = size.width * 0.1f
-        val gapTop = size.height * 0.35f
-        val gapBottom = size.height * 0.55f
+            val obstacleX = size.width * 0.7f
+            val obstacleWidth = size.width * 0.1f
+            val gapTop = size.height * 0.35f
+            val gapBottom = size.height * 0.55f
 
-        drawRect(
-            color = Color(0xFF228B22),
-            topLeft = Offset(obstacleX, 0f),
-            size = Size(obstacleWidth, gapTop)
-        )
-        drawRect(
-            color = Color(0xFF228B22),
-            topLeft = Offset(obstacleX, gapBottom),
-            size = Size(obstacleWidth, size.height - gapBottom)
+            drawRect(
+                color = Color(0xFF228B22),
+                topLeft = Offset(obstacleX, 0f),
+                size = Size(obstacleWidth, gapTop)
+            )
+            drawRect(
+                color = Color(0xFF228B22),
+                topLeft = Offset(obstacleX, gapBottom),
+                size = Size(obstacleWidth, size.height - gapBottom)
+            )
+        }
+
+        CogwingScoreRow(
+            stats = listOf(
+                "Score" to uiState.score.toString(),
+                "Best" to uiState.bestScore.toString(),
+            ),
+            modifier = Modifier
+                .fillMaxWidth()
+                .statusBarsPadding()
+                .padding(CogwingSpacing.sp4),
         )
 
         if (uiState.gameState == GameState.Idle || uiState.gameState == GameState.GameOver) {
-            drawRect(
-                color = Color(0x88000000),
-                topLeft = Offset(size.width * 0.1f, size.height * 0.45f),
-                size = Size(size.width * 0.8f, size.height * 0.1f)
-            )
+            CogwingPanel(
+                modifier = Modifier
+                    .align(Alignment.Center)
+                    .padding(CogwingSpacing.sp4),
+                style = PanelStyle.BrassPlate,
+            ) {
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.spacedBy(CogwingSpacing.sp3),
+                ) {
+                    val label = if (uiState.gameState == GameState.Idle) "Take Wing" else "Try Again"
+                    CogwingPrimaryButton(text = label, onClick = viewModel::onTap)
+                }
+            }
         }
     }
 }

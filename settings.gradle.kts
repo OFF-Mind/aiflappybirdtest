@@ -21,3 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "AI Flappy Bird"
 include(":app")
+include(":designsystem")

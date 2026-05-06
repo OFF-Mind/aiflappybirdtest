@@ -6,10 +6,10 @@ plugins {
 
 android {
     namespace = "com.offmind.aiflappybird.designsystem"
-    compileSdk = 36
+    compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
-        minSdk = 33
+        minSdk = libs.versions.minSdk.get().toInt()
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
@@ -21,11 +21,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.toVersion(libs.versions.jdkVersion.get())
+        targetCompatibility = JavaVersion.toVersion(libs.versions.jdkVersion.get())
     }
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = libs.versions.jdkVersion.get()
     }
     buildFeatures {
         compose = true

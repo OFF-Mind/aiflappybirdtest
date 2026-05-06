@@ -13,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.offmind.aiflappybird.designsystem.theme.Brass
@@ -21,7 +22,6 @@ import com.offmind.aiflappybird.designsystem.theme.BrassLight
 import com.offmind.aiflappybird.designsystem.theme.CogwingTheme
 import com.offmind.aiflappybird.designsystem.theme.InkDark
 import com.offmind.aiflappybird.designsystem.theme.ParchmentLight
-import com.offmind.aiflappybird.designsystem.theme.Soot
 import com.offmind.aiflappybird.designsystem.theme.SootLight
 
 @Composable
@@ -49,7 +49,7 @@ fun CogwingSegmentedControl(
                             Modifier
                                 .background(Brush.verticalGradient(listOf(BrassLight, Brass, BrassDark)))
                         } else {
-                            Modifier.background(Soot.copy(alpha = 0f))
+                            Modifier.background(Color.Transparent)
                         },
                     )
                     .clickable { onOptionSelected(index) }

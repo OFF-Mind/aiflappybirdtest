@@ -5,12 +5,12 @@ plugins {
 
 android {
     namespace = "com.offmind.aiflappybird"
-    compileSdk = 36
+    compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
         applicationId = "com.offmind.aiflappybird"
-        minSdk = 33
-        targetSdk = 36
+        minSdk = libs.versions.minSdk.get().toInt()
+        targetSdk = libs.versions.targetSdk.get().toInt()
         versionCode = 1
         versionName = "1.0"
 
@@ -24,8 +24,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.toVersion(libs.versions.jdkVersion.get())
+        targetCompatibility = JavaVersion.toVersion(libs.versions.jdkVersion.get())
     }
     buildFeatures {
         compose = true

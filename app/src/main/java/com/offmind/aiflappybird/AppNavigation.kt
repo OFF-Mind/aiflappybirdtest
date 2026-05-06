@@ -19,7 +19,13 @@ fun AppNavigation() {
         startDestination = AppDestinations.WELCOME,
     ) {
         composable(AppDestinations.WELCOME) {
-            WelcomeScreen(onStartGame = { navController.navigate(AppDestinations.GAME) })
+            WelcomeScreen(
+                onStartGame = {
+                    navController.navigate(AppDestinations.GAME) {
+                        launchSingleTop = true
+                    }
+                },
+            )
         }
         composable(AppDestinations.GAME) {
             GameScreen()

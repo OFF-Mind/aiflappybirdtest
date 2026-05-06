@@ -1,14 +1,9 @@
 name: Maestro UI Tests
 
 on:
-  workflow_dispatch:
-    inputs:
-      pr_number:
-        description: 'PR number to comment results on'
-        required: false
-  push:
-    branches:
-      - main
+  pull_request:
+    paths:
+      - '.maestro/**'
 
 jobs:
   ui-tests:
@@ -42,20 +37,3 @@ jobs:
         with:
           name: maestro-results
           path: maestro-results.xml
-
-      - name: Comment PR with results
-        if: github.event.inputs.pr_number != ''
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          if [ -f maestro-results.xml ]; then
-            FAILURES=$(grep -c 'failure' maestro-results.xml || echo 0)
-            if [ "$FAILURES" -eq "0" ]; then
-              RESULT="✅ All Maestro UI tests passed"
-            else
-              RESULT="❌ Maestro UI tests failed ($FAILURES failures)"
-            fi
-          else
-            RESULT="⚠️ No test results found"
-          fi
-          gh pr comment ${{ github.event.inputs.pr_number }} --body "$RESULT"

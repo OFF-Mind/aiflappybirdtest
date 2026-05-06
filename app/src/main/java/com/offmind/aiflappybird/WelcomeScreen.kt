@@ -35,7 +35,7 @@ fun WelcomeScreen(onStartGame: () -> Unit) {
                     style = MaterialTheme.typography.headlineMedium,
                 )
                 CogwingPrimaryButton(
-                    text = "Start Game",
+                    text = "START GAME",
                     onClick = onStartGame,
                 )
             }

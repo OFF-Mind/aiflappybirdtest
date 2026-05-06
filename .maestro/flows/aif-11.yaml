@@ -1,0 +1,10 @@
+appId: com.offmind.aiflappybird
+---
+- launchApp:
+    clearState: true
+- assertVisible: "AI Flappy Bird"
+- assertVisible: "START GAME"
+- tapOn: "START GAME"
+- assertVisible: "TAKE WING"
+- back
+- assertVisible: "START GAME"

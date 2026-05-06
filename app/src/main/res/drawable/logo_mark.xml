@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android" android:width="240dp" android:height="240dp" android:viewportWidth="240" android:viewportHeight="240">
+  <group android:translateX="120" android:translateY="120">
+  <group>
+  <path android:pathData="M -108,0 A 108,108 0,1 0 108,0 A 108,108 0,1 0 -108,0 Z" android:fillColor="#d4a04a" android:strokeColor="#1a120a" android:strokeWidth="2" />
+  <group>
+  <path android:pathData="M -14,-118 H 14 V -96 H -14 Z" android:fillColor="#d4a04a" android:strokeColor="#1a120a" android:strokeWidth="2" />
+  <group android:rotation="45">
+  <path android:pathData="M -14,-118 H 14 V -96 H -14 Z" android:fillColor="#d4a04a" android:strokeColor="#1a120a" android:strokeWidth="2" />
+  </group>
+  <group android:rotation="90">
+  <path android:pathData="M -14,-118 H 14 V -96 H -14 Z" android:fillColor="#d4a04a" android:strokeColor="#1a120a" android:strokeWidth="2" />
+  </group>
+  <group android:rotation="135">
+  <path android:pathData="M -14,-118 H 14 V -96 H -14 Z" android:fillColor="#d4a04a" android:strokeColor="#1a120a" android:strokeWidth="2" />
+  </group>
+  <group android:rotation="180">
+  <path android:pathData="M -14,-118 H 14 V -96 H -14 Z" android:fillColor="#d4a04a" android:strokeColor="#1a120a" android:strokeWidth="2" />
+  </group>
+  <group android:rotation="225">
+  <path android:pathData="M -14,-118 H 14 V -96 H -14 Z" android:fillColor="#d4a04a" android:strokeColor="#1a120a" android:strokeWidth="2" />
+  </group>
+  <group android:rotation="270">
+  <path android:pathData="M -14,-118 H 14 V -96 H -14 Z" android:fillColor="#d4a04a" android:strokeColor="#1a120a" android:strokeWidth="2" />
+  </group>
+  <group android:rotation="315">
+  <path android:pathData="M -14,-118 H 14 V -96 H -14 Z" android:fillColor="#d4a04a" android:strokeColor="#1a120a" android:strokeWidth="2" />
+  </group>
+  </group>
+  </group>
+  <path android:pathData="M -92,0 A 92,92 0,1 0 92,0 A 92,92 0,1 0 -92,0 Z" android:fillColor="#1f1812" android:strokeColor="#1a120a" android:strokeWidth="2" />
+  <path android:pathData="M -92,0 A 92,92 0,1 0 92,0 A 92,92 0,1 0 -92,0 Z" android:fillColor="#00000000" android:strokeColor="#d4a04a" android:strokeWidth="1.5" android:fillAlpha="0.5" android:strokeAlpha="0.5" />
+  <group android:translateX="-6" android:translateY="8">
+  <path android:pathData="M -56 4 C -56 -22, -28 -42, 4 -38 C 38 -34, 60 -14, 68 6 C 62 26, 40 38, 8 38 C -28 38, -56 24, -56 4 Z" android:fillColor="#c87b4a" android:strokeColor="#1a120a" android:strokeWidth="2.5" />
+  <path android:pathData="M -32 -16 C -14 -34, 18 -34, 42 -16 C 30 -2, 8 6, -16 4 C -28 2, -34 -8, -32 -16 Z" android:fillColor="#d4a04a" android:strokeColor="#1a120a" android:strokeWidth="2.5" />
+  <path android:pathData="M 68 6 L 92 -2 L 68 -8 Z" android:fillColor="#d4a04a" android:strokeColor="#1a120a" android:strokeWidth="2" />
+  <path android:pathData="M 39,-16 A 7,7 0,1 0 53,-16 A 7,7 0,1 0 39,-16 Z" android:fillColor="#fbf3e0" android:strokeColor="#1a120a" android:strokeWidth="2" />
+  <path android:pathData="M 44,-15 A 3,3 0,1 0 50,-15 A 3,3 0,1 0 44,-15 Z" android:fillColor="#1a120a" />
+  <path android:pathData="M -56 4 L -76 -10 L -68 0 L -76 10 Z" android:fillColor="#d4a04a" android:strokeColor="#1a120a" android:strokeWidth="2" />
+  </group>
+  </group>
+  </vector>

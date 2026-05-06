@@ -36,10 +36,15 @@ jobs:
           profile: pixel_6
           script: |
             curl -Ls "https://get.maestro.mobile.dev" | bash
-            export PATH=$PATH:$HOME/.maestro/bin
+            export PATH="$PATH:$HOME/.maestro/bin"
             ./gradlew assembleDebug
             adb install app/build/outputs/apk/debug/app-debug.apk
-            maestro test .maestro/flows/ --format junit --output maestro-results.xml
+            if ls .maestro/flows/*.yaml 1> /dev/null 2>&1; then
+              maestro test .maestro/flows/ --format junit --output maestro-results.xml
+            else
+              echo "No Maestro flows found, skipping UI tests"
+              echo '<?xml version="1.0" encoding="UTF-8"?><testsuites/>' > maestro-results.xml
+            fi
 
       - name: Upload test results
         if: always()

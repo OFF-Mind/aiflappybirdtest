@@ -1,0 +1,21 @@
+appId: com.offmind.aiflappybird
+
+---
+
+- launchApp
+
+- tapOn: "START GAME"
+
+- tapOn:
+    point: "50%,50%"
+- assertVisible: "Score"
+
+- tapOn:
+    point: "50%,50%"
+- extendedWaitUntil:
+    visible: "Try Again"
+    timeout: 30000
+
+- tapOn: "Try Again"
+
+- assertVisible: "Take Wing"

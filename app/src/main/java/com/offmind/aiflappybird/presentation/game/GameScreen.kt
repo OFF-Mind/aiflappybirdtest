@@ -43,30 +43,32 @@ fun GameScreen(viewModel: GameViewModel = viewModel()) {
         ) {
             drawRect(color = SootDark, size = size)
 
-            val playerRadius = size.width * 0.05f
-            val playerX = size.width * 0.25f
+            uiState.obstacles.forEach { obstacle ->
+                val obstacleX = size.width * obstacle.x
+                val obstacleWidth = size.width * obstacle.width
+                val gapTopPx = size.height * obstacle.gapTop
+                val gapBottomPx = size.height * obstacle.gapBottom
+
+                drawRect(
+                    color = Copper,
+                    topLeft = Offset(obstacleX, 0f),
+                    size = Size(obstacleWidth, gapTopPx)
+                )
+                drawRect(
+                    color = Copper,
+                    topLeft = Offset(obstacleX, gapBottomPx),
+                    size = Size(obstacleWidth, size.height - gapBottomPx)
+                )
+            }
+
+            val playerRadius = size.width * uiState.bird.radius
+            val playerX = size.width * uiState.bird.x
             val playerYPx = size.height * uiState.bird.y
 
             drawCircle(
                 color = Brass,
                 radius = playerRadius,
                 center = Offset(playerX, playerYPx)
-            )
-
-            val obstacleX = size.width * 0.7f
-            val obstacleWidth = size.width * 0.1f
-            val gapTop = size.height * 0.35f
-            val gapBottom = size.height * 0.55f
-
-            drawRect(
-                color = Copper,
-                topLeft = Offset(obstacleX, 0f),
-                size = Size(obstacleWidth, gapTop)
-            )
-            drawRect(
-                color = Copper,
-                topLeft = Offset(obstacleX, gapBottom),
-                size = Size(obstacleWidth, size.height - gapBottom)
             )
         }
 

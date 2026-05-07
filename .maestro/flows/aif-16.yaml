@@ -1,0 +1,4 @@
+appId: com.offmind.aiflappybird
+---
+- launchApp
+- assertVisible: "Cogwing"

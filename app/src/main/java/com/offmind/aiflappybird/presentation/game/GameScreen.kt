@@ -15,7 +15,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.BlurEffect
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Paint
+import androidx.compose.ui.graphics.TileMode
+import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
+import androidx.compose.ui.graphics.nativeCanvas
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -42,6 +48,40 @@ fun GameScreen(viewModel: GameViewModel = viewModel()) {
                 }
         ) {
             drawRect(color = SootDark, size = size)
+
+            if (size.width > 0 && size.height > 0) {
+                uiState.backgroundObstacles.forEach { obstacle ->
+                    val obstacleX = size.width * obstacle.x
+                    val obstacleWidth = size.width * obstacle.width
+                    val gapTopPx = size.height * obstacle.gapTop
+                    val gapBottomPx = size.height * obstacle.gapBottom
+
+                    drawIntoCanvas { canvas ->
+                        val paint = Paint().asFrameworkPaint().apply {
+                            color = Copper.copy(alpha = 0.4f).toArgb()
+                            maskFilter = android.graphics.BlurMaskFilter(
+                                8f,
+                                android.graphics.BlurMaskFilter.Blur.NORMAL
+                            )
+                        }
+
+                        canvas.nativeCanvas.drawRect(
+                            obstacleX,
+                            0f,
+                            obstacleX + obstacleWidth,
+                            gapTopPx,
+                            paint
+                        )
+                        canvas.nativeCanvas.drawRect(
+                            obstacleX,
+                            gapBottomPx,
+                            obstacleX + obstacleWidth,
+                            size.height,
+                            paint
+                        )
+                    }
+                }
+            }
 
             uiState.obstacles.forEach { obstacle ->
                 val obstacleX = size.width * obstacle.x

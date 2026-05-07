@@ -1,0 +1,14 @@
+appId: com.offmind.aiflappybird
+---
+- launchApp
+- assertVisible: "Welcome to Cogwing Ascent"
+- tapOn: "Start Game"
+- assertVisible: "Score"
+- assertVisible: "Best"
+- assertVisible: "Take Wing"
+- tapOn: "Take Wing"
+- runFlow:
+    when:
+      visible: "Try Again"
+    commands:
+      - assertVisible: "Try Again"

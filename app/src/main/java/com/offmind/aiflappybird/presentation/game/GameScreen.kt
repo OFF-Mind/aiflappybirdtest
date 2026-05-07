@@ -23,7 +23,10 @@ import com.offmind.aiflappybird.designsystem.components.CogwingPanel
 import com.offmind.aiflappybird.designsystem.components.CogwingPrimaryButton
 import com.offmind.aiflappybird.designsystem.components.CogwingScoreRow
 import com.offmind.aiflappybird.designsystem.components.PanelStyle
+import com.offmind.aiflappybird.designsystem.theme.Brass
 import com.offmind.aiflappybird.designsystem.theme.CogwingSpacing
+import com.offmind.aiflappybird.designsystem.theme.Copper
+import com.offmind.aiflappybird.designsystem.theme.SootDark
 import com.offmind.aiflappybird.domain.model.GameState
 
 @Composable
@@ -38,14 +41,14 @@ fun GameScreen(viewModel: GameViewModel = viewModel()) {
                     detectTapGestures { viewModel.onTap() }
                 }
         ) {
-            drawRect(color = Color(0xFF4EC0CA), size = size)
+            drawRect(color = SootDark, size = size)
 
             val playerRadius = size.width * 0.05f
             val playerX = size.width * 0.25f
             val playerYPx = size.height * uiState.bird.y
 
             drawCircle(
-                color = Color(0xFFFFD700),
+                color = Brass,
                 radius = playerRadius,
                 center = Offset(playerX, playerYPx)
             )
@@ -56,12 +59,12 @@ fun GameScreen(viewModel: GameViewModel = viewModel()) {
             val gapBottom = size.height * 0.55f
 
             drawRect(
-                color = Color(0xFF228B22),
+                color = Copper,
                 topLeft = Offset(obstacleX, 0f),
                 size = Size(obstacleWidth, gapTop)
             )
             drawRect(
-                color = Color(0xFF228B22),
+                color = Copper,
                 topLeft = Offset(obstacleX, gapBottom),
                 size = Size(obstacleWidth, size.height - gapBottom)
             )

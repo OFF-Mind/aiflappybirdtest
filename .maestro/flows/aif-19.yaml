@@ -1,0 +1,6 @@
+appId: com.offmind.aiflappybird
+---
+- launchApp
+- tapOn: "Take Wing"
+- assertVisible: "Score"
+- assertVisible: "Best"

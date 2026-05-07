@@ -17,9 +17,13 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.graphics.drawscope.rotate
+import androidx.compose.ui.graphics.drawscope.translate
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.res.painterResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.offmind.aiflappybird.R
 import com.offmind.aiflappybird.designsystem.components.CogwingPanel
 import com.offmind.aiflappybird.designsystem.components.CogwingPrimaryButton
 import com.offmind.aiflappybird.designsystem.components.CogwingScoreRow
@@ -35,6 +39,7 @@ import com.offmind.aiflappybird.domain.model.GameState
 @Composable
 fun GameScreen(viewModel: GameViewModel = viewModel()) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val pipePainter = painterResource(id = R.drawable.pipe)
 
     Box(modifier = Modifier.fillMaxSize()) {
         Canvas(
@@ -110,16 +115,26 @@ fun GameScreen(viewModel: GameViewModel = viewModel()) {
                 val gapTopPx = size.height * obstacle.gapTop
                 val gapBottomPx = size.height * obstacle.gapBottom
 
-                drawRect(
-                    color = Copper,
-                    topLeft = Offset(obstacleX, 0f),
-                    size = Size(obstacleWidth, gapTopPx)
-                )
-                drawRect(
-                    color = Copper,
-                    topLeft = Offset(obstacleX, gapBottomPx),
-                    size = Size(obstacleWidth, size.height - gapBottomPx)
-                )
+                val topPipeHeight = gapTopPx
+                val bottomPipeHeight = size.height - gapBottomPx
+
+                if (topPipeHeight > 0f) {
+                    translate(left = obstacleX, top = 0f) {
+                        with(pipePainter) {
+                            draw(size = Size(obstacleWidth, topPipeHeight))
+                        }
+                    }
+                }
+
+                if (bottomPipeHeight > 0f) {
+                    translate(left = obstacleX, top = gapBottomPx) {
+                        rotate(degrees = 180f, pivot = Offset(obstacleWidth / 2f, bottomPipeHeight / 2f)) {
+                            with(pipePainter) {
+                                draw(size = Size(obstacleWidth, bottomPipeHeight))
+                            }
+                        }
+                    }
+                }
             }
 
             val playerRadius = size.width * uiState.bird.radius

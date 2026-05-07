@@ -15,10 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.BlurEffect
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Paint
-import androidx.compose.ui.graphics.TileMode
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.graphics.toArgb
@@ -57,7 +54,7 @@ fun GameScreen(viewModel: GameViewModel = viewModel()) {
                     val gapBottomPx = size.height * obstacle.gapBottom
 
                     drawIntoCanvas { canvas ->
-                        val paint = Paint().asFrameworkPaint().apply {
+                        val paint = android.graphics.Paint().apply {
                             color = Copper.copy(alpha = 0.4f).toArgb()
                             maskFilter = android.graphics.BlurMaskFilter(
                                 8f,

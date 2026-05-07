@@ -40,6 +40,7 @@ class GameViewModel(
         const val GAP_HEIGHT = 0.30f
         const val TOP_MARGIN = 0.15f
         const val BOTTOM_MARGIN = 0.15f
+        const val BACKGROUND_SPEED_MULTIPLIER = 0.2f
     }
 
     fun onTap() {
@@ -104,9 +105,13 @@ class GameViewModel(
             playingTime += deltaTime
             timeSinceLastSpawn += deltaTime
 
+            val obstacleSpeed = calculateObstacleSpeed()
+            val backgroundSpeed = obstacleSpeed * BACKGROUND_SPEED_MULTIPLIER
+
             var updatedState = state.copy(
                 bird = updateBird(state.bird, deltaTime),
-                obstacles = updateObstacles(state.obstacles, deltaTime)
+                obstacles = updateObstacles(state.obstacles, deltaTime, obstacleSpeed),
+                backgroundOffset = state.backgroundOffset + backgroundSpeed * deltaTime
             )
 
             val spawnInterval = calculateSpawnInterval()
@@ -134,8 +139,7 @@ class GameViewModel(
         return bird.copy(y = newY, velocityY = newVelocityY)
     }
 
-    private fun updateObstacles(obstacles: List<Obstacle>, deltaTime: Float): List<Obstacle> {
-        val speed = calculateObstacleSpeed()
+    private fun updateObstacles(obstacles: List<Obstacle>, deltaTime: Float, speed: Float): List<Obstacle> {
         return obstacles
             .map { it.copy(x = it.x - speed * deltaTime) }
             .filter { it.x + it.width > 0f }

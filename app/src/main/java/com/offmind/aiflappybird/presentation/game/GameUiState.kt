@@ -9,5 +9,6 @@ data class GameUiState(
     val bird: Bird = Bird(),
     val obstacles: List<Obstacle> = emptyList(),
     val score: Int = 0,
-    val bestScore: Int = 0
+    val bestScore: Int = 0,
+    val backgroundOffset: Float = 0f
 )

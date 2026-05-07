@@ -47,35 +47,39 @@ fun GameScreen(viewModel: GameViewModel = viewModel()) {
             drawRect(color = SootDark, size = size)
 
             if (size.width > 0 && size.height > 0) {
-                uiState.backgroundObstacles.forEach { obstacle ->
-                    val obstacleX = size.width * obstacle.x
-                    val obstacleWidth = size.width * obstacle.width
-                    val gapTopPx = size.height * obstacle.gapTop
-                    val gapBottomPx = size.height * obstacle.gapBottom
+                val layers = listOf(
+                    Triple(0.25f, 0.25f, 12f),
+                    Triple(0.5f, 0.35f, 8f),
+                    Triple(0.75f, 0.45f, 4f)
+                )
 
-                    drawIntoCanvas { canvas ->
-                        val paint = android.graphics.Paint().apply {
-                            color = Copper.copy(alpha = 0.4f).toArgb()
-                            maskFilter = android.graphics.BlurMaskFilter(
-                                8f,
-                                android.graphics.BlurMaskFilter.Blur.NORMAL
-                            )
+                layers.forEach { (speedMultiplier, alpha, blurRadius) ->
+                    uiState.backgroundObstacles.forEach { obstacle ->
+                        val layerOffset = (1f - speedMultiplier) * 0.3f
+                        val obstacleX = size.width * (obstacle.x + layerOffset)
+                        val obstacleWidth = size.width * obstacle.width
+
+                        val tubeHeight = size.height * 0.65f
+
+                        if (obstacleX + obstacleWidth + blurRadius > -blurRadius && obstacleX - blurRadius < size.width + blurRadius) {
+                            drawIntoCanvas { canvas ->
+                                val paint = android.graphics.Paint().apply {
+                                    color = Copper.copy(alpha = alpha).toArgb()
+                                    maskFilter = android.graphics.BlurMaskFilter(
+                                        blurRadius,
+                                        android.graphics.BlurMaskFilter.Blur.NORMAL
+                                    )
+                                }
+
+                                canvas.nativeCanvas.drawRect(
+                                    obstacleX,
+                                    size.height - tubeHeight,
+                                    obstacleX + obstacleWidth,
+                                    size.height,
+                                    paint
+                                )
+                            }
                         }
-
-                        canvas.nativeCanvas.drawRect(
-                            obstacleX,
-                            0f,
-                            obstacleX + obstacleWidth,
-                            gapTopPx,
-                            paint
-                        )
-                        canvas.nativeCanvas.drawRect(
-                            obstacleX,
-                            gapBottomPx,
-                            obstacleX + obstacleWidth,
-                            size.height,
-                            paint
-                        )
                     }
                 }
             }

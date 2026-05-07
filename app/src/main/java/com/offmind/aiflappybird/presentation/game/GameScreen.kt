@@ -22,6 +22,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import kotlin.math.floor
 import com.offmind.aiflappybird.designsystem.components.CogwingPanel
 import com.offmind.aiflappybird.designsystem.components.CogwingPrimaryButton
 import com.offmind.aiflappybird.designsystem.components.CogwingScoreRow
@@ -46,22 +47,34 @@ fun GameScreen(viewModel: GameViewModel = viewModel()) {
         ) {
             drawRect(color = SootDark, size = size)
 
-            if (size.width > 0 && size.height > 0) {
-                val layers = listOf(
-                    Triple(0.25f, 0.25f, 12f),
+            if (size.width > 0 && size.height > 0 && uiState.obstacles.isNotEmpty()) {
+                val baseScrollOffset = uiState.obstacles.minOf { it.x }
+
+                val backgroundLayers = listOf(
+                    Triple(0.3f, 0.25f, 12f),
                     Triple(0.5f, 0.35f, 8f),
-                    Triple(0.75f, 0.45f, 4f)
+                    Triple(0.7f, 0.45f, 6f)
                 )
 
-                layers.forEach { (speedMultiplier, alpha, blurRadius) ->
-                    uiState.backgroundObstacles.forEach { obstacle ->
-                        val layerOffset = (1f - speedMultiplier) * 0.3f
-                        val obstacleX = size.width * (obstacle.x + layerOffset)
-                        val obstacleWidth = size.width * obstacle.width
+                val tubeSpacing = 0.4f
+                val tubeWidthFraction = 0.08f
 
-                        val tubeHeight = size.height * 0.65f
+                backgroundLayers.forEach { (speedMultiplier, alpha, blurRadius) ->
+                    val layerScroll = baseScrollOffset * speedMultiplier
+                    val startIndex = floor((layerScroll - 0.3f) / tubeSpacing).toInt()
+                    val endIndex = floor((layerScroll + 1.4f) / tubeSpacing).toInt()
 
-                        if (obstacleX + obstacleWidth + blurRadius > -blurRadius && obstacleX - blurRadius < size.width + blurRadius) {
+                    for (i in startIndex..endIndex) {
+                        val tubeX = i * tubeSpacing - layerScroll
+                        val seed = i * 37 + (speedMultiplier * 100).toInt()
+                        val heightFraction = 0.5f + ((seed % 100) / 100f) * 0.35f
+
+                        val tubePx = size.width * tubeX
+                        val tubeWidthPx = size.width * tubeWidthFraction
+                        val tubeHeightPx = size.height * heightFraction
+
+                        if (tubePx + tubeWidthPx + blurRadius > -blurRadius &&
+                            tubePx - blurRadius < size.width + blurRadius) {
                             drawIntoCanvas { canvas ->
                                 val paint = android.graphics.Paint().apply {
                                     color = Copper.copy(alpha = alpha).toArgb()
@@ -72,9 +85,9 @@ fun GameScreen(viewModel: GameViewModel = viewModel()) {
                                 }
 
                                 canvas.nativeCanvas.drawRect(
-                                    obstacleX,
-                                    size.height - tubeHeight,
-                                    obstacleX + obstacleWidth,
+                                    tubePx,
+                                    size.height - tubeHeightPx,
+                                    tubePx + tubeWidthPx,
                                     size.height,
                                     paint
                                 )

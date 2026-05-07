@@ -28,7 +28,6 @@ class GameViewModel(
     private var timeSinceLastSpawn = 0f
     private var playingTime = 0f
     private var nextObstacleId = 0
-    private var nextBackgroundObstacleId = -1000
 
     private companion object {
         const val TICK_INTERVAL_MS = 16L
@@ -41,8 +40,6 @@ class GameViewModel(
         const val GAP_HEIGHT = 0.30f
         const val TOP_MARGIN = 0.15f
         const val BOTTOM_MARGIN = 0.15f
-        const val BACKGROUND_SPEED_RATIO = 0.4f
-        const val BACKGROUND_OBSTACLE_SPACING = 0.6f
     }
 
     fun onTap() {
@@ -62,17 +59,11 @@ class GameViewModel(
     private fun startGame() {
         if (gameLoopJob?.isActive == true) return
 
-        _uiState.update {
-            it.copy(
-                gameState = GameState.Running,
-                backgroundObstacles = createInitialBackgroundObstacles()
-            )
-        }
+        _uiState.update { it.copy(gameState = GameState.Running) }
         lastFrameTime = System.currentTimeMillis()
         timeSinceLastSpawn = 0f
         playingTime = 0f
         nextObstacleId = 0
-        nextBackgroundObstacleId = -1000
 
         gameLoopJob = viewModelScope.launch {
             while (_uiState.value.gameState == GameState.Running) {
@@ -115,8 +106,7 @@ class GameViewModel(
 
             var updatedState = state.copy(
                 bird = updateBird(state.bird, deltaTime),
-                obstacles = updateObstacles(state.obstacles, deltaTime),
-                backgroundObstacles = updateBackgroundObstacles(state.backgroundObstacles, deltaTime)
+                obstacles = updateObstacles(state.obstacles, deltaTime)
             )
 
             val spawnInterval = calculateSpawnInterval()
@@ -162,58 +152,6 @@ class GameViewModel(
             gapTop = gapCenter - GAP_HEIGHT / 2,
             gapBottom = gapCenter + GAP_HEIGHT / 2
         )
-    }
-
-    private fun createInitialBackgroundObstacles(): List<Obstacle> {
-        val obstacles = mutableListOf<Obstacle>()
-        val random = Random(42)
-        var xPosition = 0.2f
-
-        while (xPosition <= 1.2f) {
-            val minGapCenter = TOP_MARGIN + GAP_HEIGHT / 2
-            val maxGapCenter = 1f - BOTTOM_MARGIN - GAP_HEIGHT / 2
-            val gapCenter = random.nextFloat() * (maxGapCenter - minGapCenter) + minGapCenter
-
-            obstacles.add(
-                Obstacle(
-                    id = nextBackgroundObstacleId++,
-                    x = xPosition,
-                    gapTop = gapCenter - GAP_HEIGHT / 2,
-                    gapBottom = gapCenter + GAP_HEIGHT / 2
-                )
-            )
-            xPosition += BACKGROUND_OBSTACLE_SPACING
-        }
-
-        return obstacles
-    }
-
-    private fun updateBackgroundObstacles(obstacles: List<Obstacle>, deltaTime: Float): List<Obstacle> {
-        val speed = calculateObstacleSpeed() * BACKGROUND_SPEED_RATIO
-        val updated = obstacles.map { it.copy(x = it.x - speed * deltaTime) }.toMutableList()
-
-        while (updated.firstOrNull()?.let { it.x + it.width < -0.2f } == true) {
-            updated.removeAt(0)
-
-            val lastX = updated.lastOrNull()?.x ?: 0.2f
-            val newX = lastX + BACKGROUND_OBSTACLE_SPACING
-
-            val random = Random(nextBackgroundObstacleId)
-            val minGapCenter = TOP_MARGIN + GAP_HEIGHT / 2
-            val maxGapCenter = 1f - BOTTOM_MARGIN - GAP_HEIGHT / 2
-            val gapCenter = random.nextFloat() * (maxGapCenter - minGapCenter) + minGapCenter
-
-            updated.add(
-                Obstacle(
-                    id = nextBackgroundObstacleId++,
-                    x = newX,
-                    gapTop = gapCenter - GAP_HEIGHT / 2,
-                    gapBottom = gapCenter + GAP_HEIGHT / 2
-                )
-            )
-        }
-
-        return updated
     }
 
     private fun checkScoring(state: GameUiState): GameUiState {

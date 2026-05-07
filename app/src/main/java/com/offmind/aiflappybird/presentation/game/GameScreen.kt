@@ -98,7 +98,7 @@ fun GameScreen(viewModel: GameViewModel = viewModel()) {
         ) {
             drawRect(color = SootDark, size = size)
 
-            if (size.width > 0 && size.height > 0) {
+            if (size.width > 0 && size.height > 0 && uiState.gameState != GameState.Idle) {
                 val rangeLength = BACKGROUND_TUBE_COUNT * BACKGROUND_TUBE_SPACING
                 val tubeWidthPx = size.width * BACKGROUND_TUBE_WIDTH
 

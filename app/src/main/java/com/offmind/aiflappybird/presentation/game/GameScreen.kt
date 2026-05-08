@@ -17,7 +17,10 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.graphics.drawscope.translate
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.res.painterResource
+import com.offmind.aiflappybird.R
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.offmind.aiflappybird.designsystem.components.CogwingPanel
@@ -35,6 +38,7 @@ import com.offmind.aiflappybird.domain.model.GameState
 @Composable
 fun GameScreen(viewModel: GameViewModel = viewModel()) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val birdPainter = painterResource(R.drawable.bird_sprite)
 
     Box(modifier = Modifier.fillMaxSize()) {
         Canvas(
@@ -126,11 +130,16 @@ fun GameScreen(viewModel: GameViewModel = viewModel()) {
             val playerX = size.width * uiState.bird.x
             val playerYPx = size.height * uiState.bird.y
 
-            drawCircle(
-                color = Brass,
-                radius = playerRadius,
-                center = Offset(playerX, playerYPx)
-            )
+            val spriteHeight = 2 * playerRadius
+            val spriteWidth = spriteHeight * (birdPainter.intrinsicSize.width / birdPainter.intrinsicSize.height)
+            val spriteTopLeftX = playerX - spriteWidth / 2
+            val spriteTopLeftY = playerYPx - spriteHeight / 2
+
+            translate(left = spriteTopLeftX, top = spriteTopLeftY) {
+                with(birdPainter) {
+                    draw(Size(spriteWidth, spriteHeight))
+                }
+            }
         }
 
         CogwingScoreRow(

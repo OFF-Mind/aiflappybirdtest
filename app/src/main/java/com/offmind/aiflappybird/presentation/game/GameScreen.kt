@@ -16,10 +16,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.res.imageResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.offmind.aiflappybird.R
 import com.offmind.aiflappybird.designsystem.components.CogwingPanel
 import com.offmind.aiflappybird.designsystem.components.CogwingPrimaryButton
 import com.offmind.aiflappybird.designsystem.components.CogwingScoreRow
@@ -35,6 +38,7 @@ import com.offmind.aiflappybird.domain.model.GameState
 @Composable
 fun GameScreen(viewModel: GameViewModel = viewModel()) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val birdSprite = ImageBitmap.imageResource(R.drawable.bird_sprite)
 
     Box(modifier = Modifier.fillMaxSize()) {
         Canvas(
@@ -126,10 +130,15 @@ fun GameScreen(viewModel: GameViewModel = viewModel()) {
             val playerX = size.width * uiState.bird.x
             val playerYPx = size.height * uiState.bird.y
 
-            drawCircle(
-                color = Brass,
-                radius = playerRadius,
-                center = Offset(playerX, playerYPx)
+            val spriteHeight = playerRadius * 2f
+            val spriteWidth = spriteHeight * (160f / 120f)
+            drawImage(
+                image = birdSprite,
+                dstOffset = androidx.compose.ui.unit.IntOffset(
+                    (playerX - spriteWidth / 2f).toInt(),
+                    (playerYPx - spriteHeight / 2f).toInt()
+                ),
+                dstSize = androidx.compose.ui.unit.IntSize(spriteWidth.toInt(), spriteHeight.toInt())
             )
         }
 
